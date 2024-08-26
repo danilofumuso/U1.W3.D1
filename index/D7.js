@@ -15,7 +15,7 @@ console.log(stringResult.toUpperCase());
   Scrivi una funzione che torni un array di 10 elementi; ognuno di essi deve essere un valore random compreso tra 0 e 100 (incluso).
 */
 
-function giveMeRandom(n) {
+function giveMeRandom() {
   const randomNumbers = [];
   for (let i = 0; i < 10; i++) {
     randomNumbers.push(Math.floor(Math.random() * 101));
@@ -32,23 +32,28 @@ console.log(giveMeRandom());
 
 const numbers = [3, 5, 8, 23, 71, 7, 18, 3, 21, 664, 21, 214];
 
-const evenNumbers = numbers.filter((n) => n % 2 === 0);
+function arrayModifier(array) {
+  const evenNumbers = array.filter((n) => n % 2 === 0);
+  return evenNumbers;
+}
 
-console.log(evenNumbers);
+let arrayEvenNumbers = arrayModifier(numbers);
+console.log(arrayEvenNumbers);
 
 /* ESERCIZIO 4 (forEach)
   Scrivi una funzione per sommare i numeri contenuti in un array
 */
 
-const somma = () => {
+function somma(array) {
   let sum = 0;
-  numbers.forEach((number) => {
+  array.forEach((number) => {
     sum += number;
   });
   return sum;
-};
+}
 
-console.log(somma());
+const sommaResult = somma(numbers);
+console.log(sommaResult);
 
 /* ESERCIZIO 5 (reduce)
   Scrivi una funzione per sommare i numeri contenuti in un array
@@ -59,14 +64,57 @@ console.log(somma());
   ritorni un secondo array con tutti i valori del precedente incrementati di n
 */
 
+function incrementBy(arrayOfNums, n) {
+  let newArray = [];
+  arrayOfNums.forEach((num) => {
+    newArray.push(num * n);
+  });
+  return newArray;
+}
+
+const incremented = incrementBy(numbers, 2);
+console.log(incremented);
+//Risoluzione con metodo filter!
+
+function incrementedByMap(arrayOfNums, n) {
+  let newArray = arrayOfNums.map((num) => num * n);
+  return newArray;
+}
+
+const incremented2 = incrementedByMap(numbers, 3);
+console.log(incremented2);
+// risoluzione con metodo map!
+
 /* ESERCIZIO 7 (map)
-  Scrivi una funzione che, dato un array di stringhe, ritorni un nuovo array contenente le lunghezze delle rispettive stringhe dell'array di partenza
+  Scrivi una funzione che, dato un array di stringhe, ritorni un nuovo array contenente 
+  le lunghezze delle rispettive stringhe dell'array di partenza
   es.: ["EPICODE", "is", "great"] => [7, 2, 5]
 */
+const stringArray = ["EPICODE", "is", "great"];
+
+function stringLengthsMaker(array) {
+  return array.map((string) => string.length);
+}
+
+let stringLengths = stringLengthsMaker(stringArray);
+console.log(stringLengths);
 
 /* ESERCIZIO 8 (forEach o for)
   Scrivi una funzione per creare un array contenente tutti i valori DISPARI da 1 a 99.
 */
+
+function arrayOdds() {
+  const arrayNumbers = [];
+  for (let i = 1; i < 100; i++) {
+    if (i % 2 !== 0) {
+      arrayNumbers.push(i);
+    }
+  }
+  return arrayNumbers;
+}
+
+let arrayOddsNumbers = arrayOdds();
+console.log(arrayOddsNumbers);
 
 /* Questo array di film verrà usato negli esercizi a seguire. Non modificarlo e scorri oltre per riprendere gli esercizi :) */
 const movies = [
@@ -174,17 +222,48 @@ const movies = [
   Scrivi una funzione per trovare il film più vecchio nell'array fornito.
 */
 
+function getOldestMovie(array) {
+  let oldestMovie = array[0]; // creo questa variabile per confrontarla con gli altri oggetti dell'array!
+  array.forEach((arrayObj) => {
+    if (parseInt(arrayObj.Year) < parseInt(oldestMovie.Year)) {
+      oldestMovie = arrayObj;
+    }
+  });
+  return oldestMovie;
+}
+console.log(getOldestMovie(movies));
+
 /* ESERCIZIO 10
   Scrivi una funzione per ottenere il numero di film contenuti nell'array fornito.
 */
+
+function numbersOfFilm(array) {
+  return array.length;
+}
+
+const numOfFilms = numbersOfFilm(movies);
+console.log(numOfFilms);
 
 /* ESERCIZIO 11 (map)
   Scrivi una funzione per creare un array con solamente i titoli dei film contenuti nell'array fornito.
 */
 
+function giveMeTitles(array) {
+  return array.map((moviesObj) => moviesObj.Title);
+}
+const titles = giveMeTitles(movies);
+console.log(titles);
+
 /* ESERCIZIO 12 (filter)
   Scrivi una funzione per ottenere dall'array fornito solamente i film usciti nel millennio corrente.
 */
+
+function moviesOfMillennium(array) {
+  return array.filter((moviesObj) => parseInt(moviesObj.Year) > 1999);
+}
+
+const millenniumMovies = moviesOfMillennium(movies);
+console.log(millenniumMovies);
 
 /* ESERCIZIO 13 (reduce)
   Scrivi una funzione per calcolare la somma di tutti gli anni in cui sono stati prodotti i film contenuti nell'array fornito.
